@@ -1,14 +1,48 @@
 {% extends "base.html" %}
 
 {% block main %}
-<h1>New Blog</h1>
-<form action="{% url 'blog:create' %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Create Blog">
-</form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
 
-<br>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="mb-4 text-center">Crear nuevo blog</h2>
 
-<a href="{% url 'blog:index' %}">Back</a>
+          <form action="{% url 'blog:create' %}" method="post" novalidate>
+            {% csrf_token %}
+
+            {% for field in form %}
+              <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field.as_widget|safe }}
+                <script>
+                  document.addEventListener("DOMContentLoaded", function () {
+                    var el = document.getElementById("{{ field.id_for_label }}");
+                    if (el && !el.classList.contains("form-control")) {
+                      el.classList.add("form-control");
+                    }
+                  });
+                </script>
+                {% if field.help_text %}
+                  <div class="form-text">{{ field.help_text }}</div>
+                {% endif %}
+                {% if field.errors %}
+                  <div class="text-danger small">{{ field.errors|striptags }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary w-100">Crear blog</button>
+          </form>
+
+          <div class="text-center mt-3">
+            <a href="{% url 'blog:index' %}" class="btn btn-link">Volver al índice</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 {% endblock %}

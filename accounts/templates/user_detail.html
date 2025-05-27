@@ -1,22 +1,37 @@
 {% extends "base.html" %}
 
 {% block main %}
-<table>
-  <tbody>
-    <tr>
-      <th>username</th>
-      <td>{{ user.username }}</td>
-    </tr>
-    <tr>
-      <th>Email address</th>
-      <td>{{ user.email }}</td>
-    </tr>
-    <tr>
-      <th>age</th>
-      <td>{{ user.age }}</td>
-    </tr>
-  </tbody>
-</table>
-<a href="{% url 'user_update' user.pk %}">Edit by</a>
-<a href="{% url 'password_change' %}">パスワードのChange</a> 
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="mb-4 text-center">Detalle del usuario</h2>
+
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th scope="row">Usuario</th>
+                <td>{{ user.username }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Email</th>
+                <td>{{ user.email }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Edad</th>
+                <td>{{ user.age }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-between mt-3">
+            <a href="{% url 'user_update' user.pk %}" class="btn btn-primary">Actualizar</a>
+            <a href="{% url 'password_change' %}" class="btn btn-secondary">Cambiar contraseña</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
